@@ -1,23 +1,47 @@
-use std::{env, fs};
-//for accepting arguements from the user and *fs* for handling files
-fn main() {
+use std::{env, fs, process};
+
+
+fn main(){
+    //this will print
     let args: Vec<String> = env::args().collect();
-    //collect function here helps to collect the arguements in vector or any data structure
-    //from the command line
-    let key=&args[1];
-    //calling the variable by reference
-    let file_path=&args[2];
-   println!("Searching for: {}",key);
-   //we are passing 2 arguements and searching the first one in file path
-   println!("File path is: {}",file_path);
-   //access the arguements starting from index 1
-   //we created a new file in root folder 
-   let contents=parse(&file_path);
-   //fs::read_to_string to read the contents in the file
-   println!("We have:\n{contents}");
+    let config = Config::func(&args).unwrap_or_else(
+    |err|
+    {
+        //closure is called , err
+        println!("{err}");
+        process::exit(1)
+        //this will stop the program immediately
+        //unwrap or else helps to return the required panic statement from the func
+    }
+    );
+    // we are directly creating struct with function inside new 
+    //calling the function from the impl
+    println!("Query : {}",config.query);
+    println!("File_path : {}",config.file_path);
+    read_Config(config);
 }
 
-fn parse(str1 : &[String]) -> String{
-    let contents=fs::read_to_string(str1).expect("Oops");
-    contents
+struct Config {
+    query : String,
+    file_path : String,
 }
+//associating new functions to config
+
+impl Config {
+    fn func(str1 : &[String]) -> Result<Config,&'static str>{
+    if str1.len()<3
+    {
+        return Err("Please enter correctly");
+    }
+    let query= str1[1].clone();
+    //clone() function returns copy of the value
+    let file_path= str1[2].clone();
+    Ok(Config { query, file_path })
+ }
+}
+fn read_Config(config : Config){
+    let contents=fs::read_to_string(config.file_path).expect("Error");
+    print!("Text in the file \n{contents}");
+}
+
+ 
