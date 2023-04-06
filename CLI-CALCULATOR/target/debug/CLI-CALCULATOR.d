@@ -1,1 +1,1 @@
-C:\Desktop\Projects\CLI-calculator\CLI-CALCULATOR\target\debug\CLI-CALCULATOR.exe: C:\Desktop\Projects\CLI-calculator\CLI-CALCULATOR\src\main.rs
+C:\Desktop\Projects\CLI-calculator\CLI-CALCULATOR\target\debug\CLI-CALCULATOR.exe: C:\Desktop\Projects\CLI-calculator\CLI-CALCULATOR\src\lib.rs C:\Desktop\Projects\CLI-calculator\CLI-CALCULATOR\src\main.rs

@@ -1,6 +1,8 @@
-use std::{env, fs, process};
+use std::{env,process};
+use std::error::Error;
 
-
+use CLI_CALCULATOR::Config;
+//helps in fetching codes from other files
 fn main(){
     //this will print
     let args: Vec<String> = env::args().collect();
@@ -18,30 +20,13 @@ fn main(){
     //calling the function from the impl
     println!("Query : {}",config.query);
     println!("File_path : {}",config.file_path);
-    read_Config(config);
-}
-
-struct Config {
-    query : String,
-    file_path : String,
-}
-//associating new functions to config
-
-impl Config {
-    fn func(str1 : &[String]) -> Result<Config,&'static str>{
-    if str1.len()<3
+    if let Err(e)=CLI_CALCULATOR::read_Config(config)
     {
-        return Err("Please enter correctly");
+        print!("Application Error {e}");
+        process::exit(1);
+        //e here declares the box<dyn error>
     }
-    let query= str1[1].clone();
-    //clone() function returns copy of the value
-    let file_path= str1[2].clone();
-    Ok(Config { query, file_path })
- }
-}
-fn read_Config(config : Config){
-    let contents=fs::read_to_string(config.file_path).expect("Error");
-    print!("Text in the file \n{contents}");
+   
 }
 
- 
+//apart from main function we moved all the codes to lib.rs to handle all effectively
