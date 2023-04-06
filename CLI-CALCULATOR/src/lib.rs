@@ -23,9 +23,26 @@ impl Config {
 pub fn read_Config(config : Config)-> Result<(),Box<dyn Error>>{
     let contents=fs::read_to_string(config.file_path)?;
     //rather than panic/expect on error ? will return the r=error message
-    print!("Text in the file \n{contents}");
     Ok(())
     //the brackets inside ok indicates that we are calling run fuction only for its sideffects
 }
+//search function
+pub fn search<'a>(query : &str, contents: &'a str) -> Vec<& 'a String>{
+    vec![]
+}
+//adding a new module test 
+#[cfg(test)]
+mod tests{
+    use super::*;
+    #[test]
+    fn result(){
+        let query="subzero";
+        let contents="\
+        Rust:
+        safe,fast,productive.
+        Pick three";
+        assert_eq!(vec!["safe,fast,productive"],search(query,contents));
 
+    }
+}
  //error handling of read config file
