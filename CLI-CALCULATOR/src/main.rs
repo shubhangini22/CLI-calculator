@@ -22,9 +22,10 @@ fn main(){
     println!("File_path : {}",config.file_path);
     if let Err(e)=CLI_CALCULATOR::read_Config(config)
     {
-        print!("Application Error {e}");
+        eprint!("Application Error {e}");
         process::exit(1);
         //e here declares the box<dyn error>
+        //eprintln is used for printing error messages
     }
    
 }
